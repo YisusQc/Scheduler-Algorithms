@@ -1,6 +1,5 @@
 #pragma once
 
-#include <cstdlib>
 #include <string>
 #include <vector>
 using namespace std;
@@ -59,7 +58,6 @@ class SRTF {
 class RR {
   private:
     int timeCurrent;
-    /*void init(vector<Process> processes, vector<int> arrivalTimes, int& totalTime, vector<vector<string>>& processesLines, vector<string>& processNames, Process CPU, int quantum);*/
     void init(vector<Process>& processes, vector<int>& arrivalTimes, int& totalTime, vector<vector<string>>& processesLines, vector<string>& processNames, Process& CPU, int quantum);
     friend class Scheduler;
 };
@@ -81,22 +79,26 @@ class Scheduler {
     vector<vector<string>> processesLines;
     vector<string> processNames;
 
-    void displayProcessTable(int startX, int startY, int fontSize);
-
   public:
     Scheduler(vector<Process>& processes, vector<int>& arrivalTimes);
     ~Scheduler() {}
 
-    void FIFO() { fifo.init(processes, arrivalTimes, totalTime, processesLines, processNames, CPU); algorithmName = "FIFO"; }
-    void SJF() { sjf.init(processes, arrivalTimes, totalTime, processesLines, processNames, CPU); algorithmName = "SJF"; }
-    void SRTF() { srtf.init(processes, arrivalTimes, totalTime, processesLines, processNames, CPU); algorithmName = "SRTF"; }
-    void RR(int quantum = 1) { rr.init(processes, arrivalTimes, totalTime, processesLines, processNames, CPU, quantum); algorithmName = "Round Robin"; }
+    int getTotalTime();
+
+    void runFIFO() { fifo.init(processes, arrivalTimes, totalTime, processesLines, processNames, CPU); algorithmName = "FIFO"; }
+    void runSJF() { sjf.init(processes, arrivalTimes, totalTime, processesLines, processNames, CPU); algorithmName = "SJF"; }
+    void runSRTF() { srtf.init(processes, arrivalTimes, totalTime, processesLines, processNames, CPU); algorithmName = "SRTF"; }
+    void runRR(int quantum = 1) { rr.init(processes, arrivalTimes, totalTime, processesLines, processNames, CPU, quantum); algorithmName = "Round Robin, q = " + to_string(quantum); }
 
     void showProcessTable();
     void showGanttDiagram();
     void showAnimatedGanttDiagram(int milliseconds = 150);
-    void displayAnimatedGanttDiagram(int milliseconds = 150);
-    void displayStepByStepGanttDiagram();
+
+    void drawProcessTable(int startX, int startY, int fontSize);
+    void drawAnimated(int frame);
+    void drawStepByStep(int frame);
+    void drawStatic();
 };
 
 void showPresentation();
+

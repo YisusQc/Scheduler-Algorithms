@@ -1,6 +1,7 @@
-  #include "algorithms.hpp"
+#include "algorithms.hpp"
 #include <iostream>
 #include <queue>
+#include <string>
 #include <thread>
 #include <chrono>
 
@@ -64,10 +65,10 @@ struct CompareBurstTime {
   CompareBurstTime(vector<Process>* p, vector<int>* a) : processes(p), arrivalTimes(a) {}
   bool operator()(int i, int j) {
     if ((*processes)[i].burstTime == (*processes)[j].burstTime) {
-        if ((*arrivalTimes)[i] == (*arrivalTimes)[j]) {
-            return i > j;
-        }
-        return (*arrivalTimes)[i] > (*arrivalTimes)[j];
+      if ((*arrivalTimes)[i] == (*arrivalTimes)[j]) {
+        return i > j;
+      }
+      return (*arrivalTimes)[i] > (*arrivalTimes)[j];
     }
     return (*processes)[i].burstTime > (*processes)[j].burstTime;
   }
@@ -277,7 +278,6 @@ void SRTF::init(vector<Process>& processes, vector<int>& arrivalTimes, int& tota
     processesLines[i] = processes[i].processLine;
 }
 
-/*void RR::init(vector<Process> processes, vector<int> arrivalTimes, int& totalTime, vector<vector<string>>& processesLines, vector<string>& processNames, Process CPU, int quantum) {*/
 void RR::init(vector<Process>& processes, vector<int>& arrivalTimes, int& totalTime, vector<vector<string>>& processesLines, vector<string>& processNames, Process& CPU, int quantum) {
   timeCurrent = 0;
   bool terminateAlgorithm = false;
@@ -330,7 +330,7 @@ void RR::init(vector<Process>& processes, vector<int>& arrivalTimes, int& totalT
     if (CPU.processState == RUNNING && CPU.burstTime == 0) {
       CPU.processState = FINISHED;
       if (processes[idx].completionTime == -1)
-          processes[idx].completionTime = timeCurrent + 1;
+        processes[idx].completionTime = timeCurrent + 1;
       q = quantum;
     }
 
@@ -517,7 +517,7 @@ void Scheduler::showAnimatedGanttDiagram(int milliseconds) {
     }
     
     cout << "\n" << endl;
-   std::this_thread::sleep_for(std::chrono::milliseconds(milliseconds));
+    std::this_thread::sleep_for(std::chrono::milliseconds(milliseconds));
 
   }
 }
@@ -528,3 +528,8 @@ void showPresentation() {
   cout << "\t|\tPlanificador de procesos\t|" << endl;
   cout << "\t|_______________________________________|\n" << endl;
 }
+
+int Scheduler::getTotalTime() {
+  return totalTime;
+}
+
