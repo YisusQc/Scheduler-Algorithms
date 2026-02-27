@@ -101,4 +101,6 @@ class Scheduler {
 };
 
 void showPresentation();
+void clearConsole();
+void pressToContinue();
 

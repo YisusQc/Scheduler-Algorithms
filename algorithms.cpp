@@ -74,6 +74,10 @@ struct CompareBurstTime {
   }
 };
 
+int Scheduler::getTotalTime() {
+  return totalTime;
+}
+
 void FIFO::init(vector<Process>& processes, vector<int>& arrivalTimes, int& totalTime, vector<vector<string>>& processesLines, vector<string>& processNames, Process& CPU){
   timeCurrent = 0;
   bool terminateAlgorithm = false;
@@ -371,8 +375,8 @@ void Scheduler::showProcessTable() {
   }
 
   cout << "\t___________________________________________________________________________________________" << endl;
-  cout << "\t| Processes | Burst_Time | Arrival_Time | Completion_Time| Turnaround_Time | Waiting_Time | \n";
-  cout << "\t|___________|____________|______________|________________|_________________|______________|" << endl;
+  cout << "\t| Processes | Burst_Time | Arrival_Time | Completion_Time | Turnaround_Time | Waiting_Time | \n";
+  cout << "\t|___________|____________|______________|_________________|_________________|______________|" << endl;
 
   for (int i = 0; i < processNames.size(); i++) {
     if (lengthClassic == false) {
@@ -387,35 +391,35 @@ void Scheduler::showProcessTable() {
       
     }
     
-    if (processes[i].burstTime < 10)
-      cout << "      " << processes[i].burstTime << "     |";
+    if (processes[i].originalBurstTime < 10)
+      cout << "      " << processes[i].originalBurstTime << "     |";
     else
-      cout << "     " << processes[i].burstTime << "     |";
+      cout << "     " << processes[i].originalBurstTime << "     |";
     if (arrivalTimes[i] < 10)
       cout << "       " << arrivalTimes[i] << "      |";
     else
       cout << "      " << arrivalTimes[i] << "      |";
     if (processes[i].completionTime < 10)
-      cout << "       " << processes[i].completionTime << "       |";
+      cout << "        " << processes[i].completionTime << "        |";
     else
-      cout << "      " << processes[i].completionTime << "       |";
+      cout << "       " << processes[i].completionTime << "        |";
 
     int tat = processes[i].completionTime - arrivalTimes[i];
     if (tat < 10)
-        cout << "        " << tat << "       |";
+        cout << "        " << tat << "        |";
     else
-        cout << "       " << tat << "       |";
+        cout << "       " << tat << "        |";
 
     int wt = tat - processes[i].originalBurstTime;
     if (wt < 10)
-        cout << "      " << wt << "      |";
+        cout << "       " << wt << "      |";
     else
-        cout << "     " << wt << "     |";
+        cout << "      " << wt << "      |";
   
     cout << endl;
   }
 
-  cout << "\t|___________|____________|______________|________________|_________________|______________|" << endl;
+  cout << "\t|___________|____________|______________|_________________|_________________|______________|" << endl;
   cout << endl;
 }
 
@@ -474,12 +478,14 @@ void Scheduler::showAnimatedGanttDiagram(int milliseconds) {
       maxLength = processNames[i].length();
   }
 
-  cout << "-> Presione cualquier tecla para continuar...";
-  system("PAUSE");
+  std::cin.clear();
+  cout << "-> Presione ENTER para continuar...";
+  std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+  std::cin.get();
 
   for (int frame = 0; frame < totalTime; frame++) {
 
-    system("cls");
+    clearConsole();
 
     showProcessTable();
     cout << "    " << "[" << algorithmName << "]" << endl;
@@ -529,7 +535,17 @@ void showPresentation() {
   cout << "\t|_______________________________________|\n" << endl;
 }
 
-int Scheduler::getTotalTime() {
-  return totalTime;
+void clearConsole() {
+#ifdef _WIN32
+  system("cls");
+#else
+  system("clear");
+#endif
+}
+
+void pressToContinue() {
+  cout << "...ENTER";
+  std::cin.clear();
+  std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 }
 
