@@ -26,17 +26,17 @@ el clásico **diagrama de Gant**. Así mismo, facilitar la visualización, segui
   
 ## Compilación y ejecución
 
-1. Crear el directorio `build` y entrar:
+1. Crear el directorio `build`:
    
    ```bash
-   mkdir build && cd build
+   mkdir build
    ```
    
 2. Generación y compilación:
 
    ```bash
-   cmake ..
-   cmake --build .
+   cmake -B build
+   cmake --build build
    ```
 3. Ejecución:
 
