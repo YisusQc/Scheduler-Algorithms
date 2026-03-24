@@ -1,7 +1,8 @@
-*.exe
-*.o
-*.out
-*.log
-build/
+build
+Debug
 main
+*.exe
+*.out
+*.dll
+*.so
 
