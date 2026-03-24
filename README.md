@@ -36,13 +36,23 @@ el clásico **diagrama de Gant**. Así mismo, facilitar la visualización, segui
 
    ```bash
    cmake -B build
+   ```
+   ```bash
    cmake --build build
    ```
+   
 3. Ejecución:
 
-   ```bash
-   ./main
-   ```
+   - En UNIX/Linux:
+
+     ```bash
+     ./main
+     ```
+   - En Windows:
+
+     ```bash
+     ./Debug/main
+     ```
 
 ## Requerimientos:
 
